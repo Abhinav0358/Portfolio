@@ -1,301 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Abhinav - Portfolio</title>
-  <link rel="stylesheet" href="styles/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhinav - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Fixed Background -->
+    <div class="fixed-background"></div>
+    
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+    
     <!-- Cloud Transition Overlay -->
-    <!-- <div class="cloud-transition-overlay" id="cloudOverlay">
-        <div class="cloud cloud-1"></div>
-        <div class="cloud cloud-2"></div>
-        <div class="cloud cloud-3"></div>
-        <div class="cloud cloud-4"></div>
-        <div class="cloud cloud-5"></div>
-        <div class="cloud cloud-6"></div>
-    </div> -->
-
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
+    <div id="cloudOverlay" class="cloud-overlay">
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+        <div class="cloud cloud4"></div>
+    </div>
+    
+    <!-- Fixed Navigation -->
+    <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-logo">Portfolio</div>
+            <div class="nav-brand">Abhinav</div>
             <ul class="nav-menu">
-                <li><a href="#hero" class="nav-link active">Home</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li><a href="#" class="nav-link resume-btn" id="resumeBtn">Resume</a></li>
+                <li><a href="#" class="nav-link" data-section="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-section="projects">Projects</a></li>
+                <li><a href="#" class="nav-link" data-section="skills">Skills</a></li>
+                <li><a href="#" class="nav-link" data-section="contact">Contact</a></li>
+                <li><a href="#" class="nav-link resume-btn">Resume</a></li>
             </ul>
         </div>
     </nav>
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero-section">
-        <div class="nether-background">
-            <div class="nether-embers">
-                <div class="nether-ember e1"></div>
-                <div class="nether-ember e2"></div>
-                <div class="nether-ember e3"></div>
-                <div class="nether-ember e4"></div>
-                <div class="nether-ember e5"></div>
-            </div>
-        </div>
-        <canvas id="particleCanvas" class="particle-canvas"></canvas>
-        <div class="hero-content">
-            <div class="rotating-shape" id="rotatingShape">
-                <div class="dodecahedron">
-                    <div class="face"></div>
-                    <div class="face"></div>
-                    <div class="face"></div>
-                    <div class="face"></div>
-                    <div class="face"></div>
-                    <div class="face"></div>
+    
+    <!-- Main Content Container -->
+    <main class="main-content">
+        
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="home-container">
+                <div class="steve-container">
+                    <div class="steve-character" id="steveCharacter">
+                        <!-- Steve's Head -->
+                        <div class="steve-head">
+                            <div class="face front"></div>
+                            <div class="face back"></div>
+                            <div class="face left"></div>
+                            <div class="face right"></div>
+                            <div class="face top"></div>
+                            <div class="face bottom"></div>
+                        </div>
+                        <!-- Steve's Body -->
+                        <div class="steve-body">
+                            <div class="face front"></div>
+                            <div class="face back"></div>
+                            <div class="face left"></div>
+                            <div class="face right"></div>
+                            <div class="face top"></div>
+                            <div class="face bottom"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-content">
+                    <h1 class="home-title">Hello, I am Abhinav</h1>
+                    <p class="home-description">Chemical Engineering Student & Developer at IIT Bombay. I'm passionate about working at the intersection of chemical engineering and machine learning, creating innovative solutions for real-world problems.</p>
+                    <div class="home-stats">
+                        <div class="stat">
+                            <span class="stat-number">20+</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">3+</span>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">5+</span>
+                            <span class="stat-label">Technologies</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="hero-text">
-                <h1 class="hero-title">Hello, I am Abhinav<span id="animatedDots">.</span></h1>
-                <p class="hero-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores, officia aut assumenda inventore quasi at cumque omnis, voluptatibus dignissimos nesciunt aliquid consequuntur blanditiis!</p>
+        </section>
+        
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="section-header">
+                <h2>My Projects</h2>
+                <p>Drag to explore my work</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects-section">
-        <div class="nether-background"></div>
-        <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
             <div class="projects-carousel" id="projectsCarousel">
-                <div class="project-card active" data-project="0">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop" alt="Suspack">
-                    </div>
-                    <div class="project-info">
-                        <h3>Suspack - Biodegradable Packaging</h3>
-                        <p>Award-winning sustainable packaging solution with removable layers</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Materials Science</span>
-                            <span class="tech-tag">3D Printing</span>
-                            <span class="tech-tag">CAD Design</span>
-                        </div>
-                        <div class="project-buttons">
-                            <a href="#" class="btn btn--primary">Live Demo</a>
-                            <a href="#" class="btn btn--outline">GitHub</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card" data-project="1">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop" alt="3D Robotics">
-                    </div>
-                    <div class="project-info">
-                        <h3>3D Printed Robotics Components</h3>
-                        <p>Modular robotic parts with precise threading and durable PLA construction</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">3D Printing</span>
-                            <span class="tech-tag">Robotics</span>
-                            <span class="tech-tag">SolidWorks</span>
-                        </div>
-                        <div class="project-buttons">
-                            <a href="#" class="btn btn--primary">Live Demo</a>
-                            <a href="#" class="btn btn--outline">GitHub</a>
+                <div class="carousel-container">
+                    <div class="project-card" data-project="0">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="project-image">
+                                    <div class="placeholder-image">IoT</div>
+                                </div>
+                                <h3>IoT Sensor Network</h3>
+                                <p>Real-time monitoring system for environmental data collection</p>
+                            </div>
+                            <div class="card-back">
+                                <div class="project-details">
+                                    <h3>IoT Sensor Network</h3>
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">Python</span>
+                                        <span class="tech-tag">IoT</span>
+                                        <span class="tech-tag">Data Analysis</span>
+                                    </div>
+                                    <div class="project-buttons">
+                                        <a href="#" class="btn btn--primary" target="_blank">Live Demo</a>
+                                        <a href="#" class="btn btn--outline" target="_blank">GitHub</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="project-card" data-project="2">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=300&fit=crop" alt="ML Stock Analysis">
-                    </div>
-                    <div class="project-info">
-                        <h3>ML Stock Analysis Tool</h3>
-                        <p>Reinforcement learning system for stock market technical analysis</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Machine Learning</span>
-                            <span class="tech-tag">Financial Analysis</span>
-                        </div>
-                        <div class="project-buttons">
-                            <a href="#" class="btn btn--primary">Live Demo</a>
-                            <a href="#" class="btn btn--outline">GitHub</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card" data-project="3">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop" alt="Angular Django">
-                    </div>
-                    <div class="project-info">
-                        <h3>Angular-Django Web Platform</h3>
-                        <p>Full-stack web application with modern frontend and robust backend</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Angular</span>
-                            <span class="tech-tag">Django</span>
-                            <span class="tech-tag">TypeScript</span>
-                        </div>
-                        <div class="project-buttons">
-                            <a href="#" class="btn btn--primary">Live Demo</a>
-                            <a href="#" class="btn btn--outline">GitHub</a>
+                    
+                    <div class="project-card" data-project="1">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="project-image">
+                                    <div class="placeholder-image">AI</div>
+                                </div>
+                                <h3>CAD Design AI</h3>
+                                <p>Automated threading system for 3D printed components</p>
+                            </div>
+                            <div class="card-back">
+                                <div class="project-details">
+                                    <h3>CAD Design AI</h3>
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">SolidWorks</span>
+                                        <span class="tech-tag">Python</span>
+                                        <span class="tech-tag">AI</span>
+                                    </div>
+                                    <div class="project-buttons">
+                                        <a href="#" class="btn btn--primary" target="_blank">Live Demo</a>
+                                        <a href="#" class="btn btn--outline" target="_blank">GitHub</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="project-card" data-project="4">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop" alt="CAD Automation">
-                    </div>
-                    <div class="project-info">
-                        <h3>CAD Design Automation</h3>
-                        <p>Automated threading and surface optimization for 3D printed components</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">SolidWorks</span>
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">3D Printing</span>
-                        </div>
-                        <div class="project-buttons">
-                            <a href="#" class="btn btn--primary">Live Demo</a>
-                            <a href="#" class="btn btn--outline">GitHub</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card" data-project="5">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop" alt="IoT Sensor Network">
-                    </div>
-                    <div class="project-info">
-                        <h3>IoT Sensor Network</h3>
-                        <p>Real-time monitoring system for environmental data collection</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">IoT</span>
-                            <span class="tech-tag">Data Analysis</span>
-                        </div>
-                        <div class="project-buttons">
-                            <a href="#" class="btn btn--primary">Live Demo</a>
-                            <a href="#" class="btn btn--outline">GitHub</a>
+                    
+                    <div class="project-card" data-project="2">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="project-image">
+                                    <div class="placeholder-image">WEB</div>
+                                </div>
+                                <h3>Angular-Django Platform</h3>
+                                <p>Full-stack web application with modern frontend and robust backend</p>
+                            </div>
+                            <div class="card-back">
+                                <div class="project-details">
+                                    <h3>Angular-Django Platform</h3>
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">Angular</span>
+                                        <span class="tech-tag">Django</span>
+                                        <span class="tech-tag">TypeScript</span>
+                                    </div>
+                                    <div class="project-buttons">
+                                        <a href="#" class="btn btn--primary" target="_blank">Live Demo</a>
+                                        <a href="#" class="btn btn--outline" target="_blank">GitHub</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills-section">
-        <div class="nether-background"></div>
-        <div class="container">
-            <h2 class="section-title">Skills & Expertise</h2>
+        </section>
+        
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <div class="section-header">
+                <h2>Skills & Technologies</h2>
+                <p>My technical expertise across different domains</p>
+            </div>
             <div class="skills-grid">
                 <div class="skill-category">
-                    <h3 class="skill-category-title">Programming</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">Python</div>
-                        <div class="skill-item">JavaScript</div>
-                        <div class="skill-item">TypeScript</div>
-                        <div class="skill-item">React</div>
-                        <div class="skill-item">Angular</div>
-                        <div class="skill-item">Django</div>
+                    <h3>Programming</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Angular</span>
+                        <span class="skill-tag">Django</span>
                     </div>
                 </div>
-
+                
                 <div class="skill-category">
-                    <h3 class="skill-category-title">3D Design & Manufacturing</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">SolidWorks</div>
-                        <div class="skill-item">3D Printing</div>
-                        <div class="skill-item">CAD Design</div>
-                        <div class="skill-item">PLA Materials</div>
-                        <div class="skill-item">Threading</div>
+                    <h3>3D Design & Manufacturing</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">SolidWorks</span>
+                        <span class="skill-tag">3D Printing</span>
+                        <span class="skill-tag">CAD Design</span>
+                        <span class="skill-tag">PLA Materials</span>
+                        <span class="skill-tag">Threading</span>
                     </div>
                 </div>
-
+                
                 <div class="skill-category">
-                    <h3 class="skill-category-title">AI & Machine Learning</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">Reinforcement Learning</div>
-                        <div class="skill-item">PPO</div>
-                        <div class="skill-item">Actor-Critic</div>
-                        <div class="skill-item">TensorFlow</div>
-                        <div class="skill-item">Data Analysis</div>
+                    <h3>AI & Machine Learning</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Reinforcement Learning</span>
+                        <span class="skill-tag">PPO</span>
+                        <span class="skill-tag">Actor-Critic</span>
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">Data Analysis</span>
                     </div>
                 </div>
-
+                
                 <div class="skill-category">
-                    <h3 class="skill-category-title">Engineering</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">Mechanical Design</div>
-                        <div class="skill-item">Materials Science</div>
-                        <div class="skill-item">Robotics</div>
-                        <div class="skill-item">IoT</div>
-                        <div class="skill-item">Structural Analysis</div>
+                    <h3>Engineering</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Mechanical Design</span>
+                        <span class="skill-tag">Materials Science</span>
+                        <span class="skill-tag">Robotics</span>
+                        <span class="skill-tag">IoT</span>
+                        <span class="skill-tag">Structural Analysis</span>
                     </div>
                 </div>
-
+                
                 <div class="skill-category">
-                    <h3 class="skill-category-title">Development Tools</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">VS Code</div>
-                        <div class="skill-item">GitHub</div>
-                        <div class="skill-item">Git</div>
-                        <div class="skill-item">Docker</div>
-                        <div class="skill-item">Linux</div>
+                    <h3>Development Tools</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">VS Code</span>
+                        <span class="skill-tag">GitHub</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Linux</span>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="nether-background"></div>
-        <canvas id="contactParticles" class="contact-particles"></canvas>
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <form class="contact-form" id="contactForm">
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+                <p>Let's work together on something amazing</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h4>Location</h4>
+                        <p>IIT Bombay, Mumbai</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Email</h4>
+                        <p>abhinav@example.com</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com/abhinav" class="social-link" target="_blank">GitHub</a>
+                        <a href="https://linkedin.com/in/abhinav" class="social-link" target="_blank">LinkedIn</a>
+                        <a href="https://twitter.com/abhinav" class="social-link" target="_blank">Twitter</a>
+                    </div>
+                </div>
+                <form class="contact-form">
                     <div class="form-group">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" id="name" name="name" class="form-control" required>
+                        <label class="form-label" for="name">Name</label>
+                        <input type="text" id="name" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
+                        <label class="form-label" for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="message" class="form-label">Message</label>
-                        <textarea id="message" name="message" rows="6" class="form-control" required></textarea>
+                        <label class="form-label" for="message">Message</label>
+                        <textarea id="message" class="form-control" rows="5" required></textarea>
                     </div>
                     <button type="submit" class="btn btn--primary btn--full-width">Send Message</button>
                 </form>
             </div>
-        </div>
-        <footer class="footer">
-            <div class="container">
-                <div class="social-links">
-                    <a href="https://github.com/abhinav" target="_blank" class="social-link">GitHub</a>
-                    <a href="https://linkedin.com/in/abhinav" target="_blank" class="social-link">LinkedIn</a>
-                    <a href="https://twitter.com/abhinav" target="_blank" class="social-link">Twitter</a>
-                </div>
-                <p>&copy; 2025 Abhinav. All rights reserved.</p>
-            </div>
-        </footer>
-    </section>
-
-    <!-- modular scripts (load utilities first) -->
-    <script src="scripts/utils.js"></script>
-    <script src="scripts/netherParticles.js"></script>
-    <script src="scripts/contactParticles.js"></script>
-    <script src="scripts/navigation.js"></script>
-    <script src="scripts/cloudTransitions.js"></script>
-    <script src="scripts/carousel.js"></script>
-    <script src="scripts/skills.js"></script>
-    <script src="scripts/contactForm.js"></script>
-    <script src="scripts/resume.js"></script>
-    <script src="scripts/social.js"></script>
-    <script src="scripts/init.js"></script>
+        </section>
+        
+    </main>
+    
+    <script src="app.js"></script>
 </body>
 </html>
