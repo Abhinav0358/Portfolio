@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhinav - Engineering Portfolio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.51/build/spline-viewer.js"></script>
+</head>
+<body>
+    <!-- Fixed Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">ABHINAV</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link" data-page="home">Home</a></li>
+                <li><a href="#projects" class="nav-link" data-page="projects">Projects</a></li>
+                <li><a href="#skills" class="nav-link" data-page="skills">Skills</a></li>
+                <li><a href="#contact" class="nav-link" data-page="contact">Contact</a></li>
+                <li><a href="#resume" class="nav-link resume-btn">Resume</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Cloud Transition Overlay -->
+    <div id="cloudOverlay" class="cloud-overlay"></div>
+
+    <!-- Main Content Container -->
+    <main class="main-container">
+        <!-- Home Section -->
+        <section id="home" class="page-section active">
+            <div class="home-content">
+                <div class="character-container">
+                    <spline-viewer url="https://prod.spline.design/KE64DtDUIgkVzCt8/scene.splinecode"></spline-viewer>
+                </div>
+                <div class="text-content">
+                    <h1 class="main-title">Hello, I am Abhinav</h1>
+                    <p class="main-description">
+                        I’m a sophomore in Chemical Engineering at IIT Bombay, pursuing a minor in Data Science. Currently a developer at DevCom and project associate at Enactus, I’m open to possibilities and would like to work at the intersection of chemical engineering and machine learning if opportunities arise.
+                    </p>
+                    <div class="cta-buttons">
+                        <button class="btn btn--primary" id="exploreBtn">Explore My Work</button>
+                        <button class="btn btn--outline" id="contactBtn">Get In Touch</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="page-section">
+            <div class="projects-content">
+                <h2 class="section-title">My Projects</h2>
+                <div class="carousel-container">
+                    <div id="projectCarousel" class="project-carousel">
+                        <!-- 3D Carousel will be rendered here -->
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-btn" id="prevBtn">←</button>
+                        <button class="carousel-btn" id="nextBtn">→</button>
+                    </div>
+                </div>
+                <div class="project-info" id="projectInfo">
+                    <h3 id="projectTitle">Doom using RL</h3>
+                    <p id="projectDescription">A reinforcement learning project aimed at training an agent to play Doom. Utilizes deep learning techniques for decision making.</p>
+                    <div class="project-buttons">
+                        <a href="#" class="btn btn--primary" id="liveDemo" target="_blank">Live Demo</a>
+                        <a href="#" class="btn btn--outline" id="githubLink" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="page-section">
+            <div class="skills-content">
+                <h2 class="section-title">Skills & Expertise</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3 class="category-title">Programming</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Three.js</span>
+                            <span class="skill-tag">Django</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="category-title">3D Design & Manufacturing</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">SolidWorks</span>
+                            <span class="skill-tag">3D Printing</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="category-title">AI & Machine Learning</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Reinforcement Learning</span>
+                            <span class="skill-tag">PPO</span>
+                            <span class="skill-tag">Actor-Critic</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">Data Analysis</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="category-title">Engineering</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Mechanical Design</span>
+                            <span class="skill-tag">Robotics</span>
+                            <span class="skill-tag">IoT</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="category-title">Development Tools</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">VS Code</span>
+                            <span class="skill-tag">GitHub</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">Linux</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="page-section">
+            <div class="contact-content">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Let's Connect</h3>
+                        <p>Ready to collaborate on innovative projects? Reach out and let's create something amazing together.</p>
+                        <div class="social-links">
+                            <a href="https://github.com/abhinav" class="social-link" target="_blank">
+                                <span class="social-icon">GitHub</span>
+                                <span class="social-label">GitHub</span>
+                            </a>
+                            <a href="https://linkedin.com/in/abhinav" class="social-link" target="_blank">
+                                <span class="social-icon">LinkedIn</span>
+                                <span class="social-label">LinkedIn</span>
+                            </a>
+                            <a href="mailto:abhinav.portfolio@example.com" class="social-link" target="_blank">
+                                <span class="social-icon">Email</span>
+                                <span class="social-label">Email</span>
+                            </a>
+                        </div>
+                    </div>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full-width">Send Message</button>
+                    </form>
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2025 Abhinav. All rights reserved.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
