@@ -15,7 +15,8 @@ class PortfolioApp {
                 id: 1,
                 title: "Doom using RL",
                 description: "A reinforcement learning project aimed at training an agent to play Doom. Utilizes deep learning techniques for decision making.",
-                image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop",
+                image: "https://media.giphy.com/media/3o7ZeMCXAFPvusagQU/giphy.gif",
+                gif: "https://media.giphy.com/media/3o7ZeMCXAFPvusagQU/giphy.gif",
                 liveDemo: "https://github.com/abhinav",
                 github: "https://github.com/abhinav"
             },
@@ -24,6 +25,7 @@ class PortfolioApp {
                 title: "Live chat using websockets",
                 description: "Real-time chat application utilizing WebSocket for instant messaging.",
                 image: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=400&h=300&fit=crop",
+                gif: "static/gifs/chat.gif",
                 liveDemo: "https://github.com/abhinav",
                 github: "https://github.com/abhinav"
             },
@@ -32,6 +34,7 @@ class PortfolioApp {
                 title: "Spherobot",
                 description: "An omnidirectional spherical robot with advanced navigation and manipulation capabilities.",
                 image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop",
+                gif: "static/gifs/spherobot.gif",
                 liveDemo: "https://github.com/abhinav",
                 github: "https://github.com/abhinav"
             },
@@ -40,6 +43,7 @@ class PortfolioApp {
                 title: "Three js",
                 description: "interactive pages build using Three.js",
                 image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=300&fit=crop",
+                gif: "static/gifs/threejs.gif",
                 liveDemo: "https://github.com/abhinav",
                 github: "https://github.com/abhinav"
             },
@@ -48,6 +52,7 @@ class PortfolioApp {
                 title: "Proj 5 ",
                 description: "",
                 image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
+                gif: "", // no gif yet
                 liveDemo: "https://github.com/abhinav",
                 github: "https://github.com/abhinav"
             },
@@ -56,6 +61,7 @@ class PortfolioApp {
                 title: "Portfolio",
                 description: "This immersive Nether-themed portfolio website with 3D interactions and particle effects.",
                 image: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&h=300&fit=crop",
+                gif: "static/gifs/portfolio.gif",
                 liveDemo: "https://github.com/abhinav",
                 github: "https://github.com/abhinav"
             }
@@ -583,11 +589,24 @@ class PortfolioApp {
         const descriptionElement = document.getElementById('projectDescription');
         const liveDemoElement = document.getElementById('liveDemo');
         const githubElement = document.getElementById('githubLink');
+        const gifElement = document.getElementById('projectGif');
+        const fallbackEl = document.getElementById('projectMediaFallback');
         
         if (titleElement) titleElement.textContent = project.title;
-        if (descriptionElement) descriptionElement.textContent = project.description;
+        if (descriptionElement) descriptionElement.textContent = project.description || ' ';
         if (liveDemoElement) liveDemoElement.href = project.liveDemo;
         if (githubElement) githubElement.href = project.github;
+
+        if (gifElement && fallbackEl) {
+            if (project.gif) {
+                gifElement.src = project.gif;
+                gifElement.style.display = 'block';
+                fallbackEl.style.display = 'none';
+            } else {
+                gifElement.style.display = 'none';
+                fallbackEl.style.display = 'flex';
+            }
+        }
     }
     
     // Enhanced Carousel Animation with Flying Cards Effect

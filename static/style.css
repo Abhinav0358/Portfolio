@@ -1149,7 +1149,7 @@ body {
 .carousel-controls {
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: 0.5rem;
     margin-bottom: 2rem;
 }
 
@@ -1157,8 +1157,8 @@ body {
     background: var(--nether-primary);
     color: var(--nether-accent);
     border: 2px solid var(--nether-accent);
-    margin-top: 1.2rem;
-    padding: 00.5rem 2.5rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem 2rem;
     font-size: 1.5rem;
     border-radius: 10px;
     cursor: pointer;
@@ -1180,28 +1180,75 @@ body {
     border: 1px solid var(--nether-accent);
     max-width: 16vw;
     margin: 0 auto;
-    height: 44vh;
+    height: 60vh; /* increased from 44vh */
     position: relative;
     bottom: 26vh;
     z-index: 1;
 }
 
-.project-info h3 {
-    font-size: 1.8rem;
-    color: var(--nether-accent);
-    margin-bottom: 1rem;
-}
-
-.project-info p {
-    color: var(--nether-text);
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-}
-
-.project-buttons {
+/* NEW: constrained media box */
+.project-media {
+    width: 100%;
+    max-width: 170px;          /* square size */
+    aspect-ratio: 1 / 1;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid var(--nether-accent);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 0 auto 1rem auto;
     display: flex;
-    gap: 1rem;
+    align-items: center;
     justify-content: center;
+    position: relative;
+}
+
+.project-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none; /* shown when gif exists */
+}
+
+.project-media-fallback {
+    font-size: 0.7rem;
+    opacity: 0.75;
+    padding: 0.4rem 0.5rem;
+    text-align: center;
+    line-height: 1.15;
+}
+
+/* Scrollable description if long */
+.project-info #projectDescription {
+    max-height: 18vh;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.project-info #projectDescription::-webkit-scrollbar {
+    width: 6px;
+}
+.project-info #projectDescription::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.05);
+}
+.project-info #projectDescription::-webkit-scrollbar-thumb {
+    background: var(--nether-accent);
+    border-radius: 6px;
+}
+
+/* Mobile: use wide media instead of small square */
+@media (max-width: 900px) {
+  .project-info {
+    height: auto;
+  }
+  .project-media {
+      max-width: 100%;
+      aspect-ratio: 16 / 9;
+      margin: 0 0 1rem 0;
+  }
+  .project-info #projectDescription {
+      max-height: none;
+      overflow: visible;
+  }
 }
 
 /* Skills Section */
@@ -1394,7 +1441,7 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 0.5rem;
     font-size: 1rem;
     font-weight: 500;
     border-radius: 8px;
