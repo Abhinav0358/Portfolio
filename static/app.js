@@ -7,6 +7,8 @@ class PortfolioApp {
         this.isTransitioning = false;
         this.pages = ['home', 'projects', 'skills', 'contact'];
         this.currentPageIndex = 0;
+        // NEW: mobile detection flag
+        this.isMobile = window.matchMedia('(max-width: 900px)').matches;
         
         this.projectData = [
             {
@@ -63,14 +65,32 @@ class PortfolioApp {
     }
     
     init() {
+        // NEW: keep flag updated on resize
+        window.addEventListener('resize', () => {
+            const prev = this.isMobile;
+            this.isMobile = window.matchMedia('(max-width: 900px)').matches;
+            if (this.isMobile && !prev) {
+                const cloudOverlay = document.getElementById('cloudOverlay');
+                cloudOverlay?.classList.remove('active');
+            }
+            // Rebuild 3D carousel if breakpoint crossed
+            if (prev !== this.isMobile && this.scene) {
+                this.rebuildCarousel();
+            }
+        });
+
         this.setupParticleSystem();
-        this.setupScrollHandler();
+        if (!this.isMobile) {
+            this.setupScrollHandler();
+        } else {
+            this.setupMobileScrolling();
+        }
         this.setupNavigation();
         this.setupProjectCarousel();
         this.setupFormHandler();
         this.setupButtonHandlers();
         
-        // Initialize first page
+        // Initialize first page (desktop only needs active state)
         this.showPage('home');
     }
     
@@ -208,6 +228,33 @@ class PortfolioApp {
         }, { passive: false });
     }
     
+    // NEW: Mobile smooth scroll + active nav tracking
+    setupMobileScrolling() {
+        // IntersectionObserver to highlight nav while scrolling
+        const options = {
+            root: null,
+            rootMargin: '-40% 0px -50% 0px',
+            threshold: 0
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    if (this.pages.includes(id)) {
+                        this.updateNavigation(id);
+                        this.currentPage = id;
+                        this.currentPageIndex = this.pages.indexOf(id);
+                    }
+                }
+            });
+        }, options);
+
+        this.pages.forEach(p => {
+            const section = document.getElementById(p);
+            if (section) observer.observe(section);
+        });
+    }
+
     // Fixed Navigation with proper click handling
     setupNavigation() {
         const navLinks = document.querySelectorAll('.nav-link[data-page]');
@@ -217,7 +264,18 @@ class PortfolioApp {
                 e.stopPropagation();
                 
                 const targetPage = link.getAttribute('data-page');
-                if (targetPage && this.pages.includes(targetPage)) {
+                if (!targetPage || !this.pages.includes(targetPage)) return;
+
+                if (this.isMobile) {
+                    // Mobile: smooth scroll only
+                    const section = document.getElementById(targetPage);
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        this.updateNavigation(targetPage);
+                        this.currentPage = targetPage;
+                        this.currentPageIndex = this.pages.indexOf(targetPage);
+                    }
+                } else {
                     this.currentPageIndex = this.pages.indexOf(targetPage);
                     this.showPage(targetPage);
                 }
@@ -298,9 +356,14 @@ class PortfolioApp {
     
     // Enhanced page showing with better state management
     showPage(pageId) {
+        // MOBILE OVERRIDE: skip overlay animation & visibility toggles
+        if (this.isMobile) {
+            // Just ensure navigation highlight; all sections already visible
+            this.updateNavigation(pageId);
+            return;
+        }
+
         if (this.isTransitioning || !pageId) return;
-        
-        // Prevent multiple simultaneous transitions
         if (this.currentPage === pageId) return;
         
         this.isTransitioning = true;
@@ -313,32 +376,19 @@ class PortfolioApp {
             return;
         }
         
-        // Show cloud transition
         cloudOverlay.classList.add('active');
         
         setTimeout(() => {
-            // Hide current page
-            if (currentSection) {
-                currentSection.classList.remove('active');
-            }
-            
-            // Show target page
+            if (currentSection) currentSection.classList.remove('active');
             targetSection.classList.add('active');
             this.currentPage = pageId;
-            
-            // Update page index to match current page
             this.currentPageIndex = this.pages.indexOf(pageId);
-            
-            // Update navigation active state with yellowish highlighting
             this.updateNavigation(pageId);
-            
-            // Special handling for projects page
             if (pageId === 'projects') {
                 this.updateProjectInfo(0);
             }
         }, 400);
         
-        // Hide clouds
         setTimeout(() => {
             cloudOverlay.classList.remove('active');
             this.isTransitioning = false;
@@ -394,11 +444,16 @@ class PortfolioApp {
     createProjectCards() {
         if (!this.scene) return;
 
-        // Clear old
+        // Clear old scene objects (keep lights later if you add them)
+        while (this.scene.children.length > 0) {
+            this.scene.remove(this.scene.children[0]);
+        }
         this.projectCards = [];
-        const radius = 11;                 // unchanged
-        const cardWidth = 10;              // unchanged
-        const cardHeight = cardWidth * 2.5;// unchanged
+
+        // Responsive dimensions
+        const radius = this.isMobile ? 7 : 11;
+        const cardWidth = this.isMobile ? 4 : 10;
+        const cardHeight = cardWidth * 2.3; // slightly less tall than 2.5 ratio for better mobile fit
         this.carouselRadius = radius;
 
         const palette = [
@@ -414,12 +469,10 @@ class PortfolioApp {
             const angle = (i / this.projectData.length) * Math.PI * 2;
             const colors = palette[i % palette.length];
 
-            // Group holds card + glows so we can float Y without breaking circular layout
             const group = new THREE.Group();
             group.position.set(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
             group.lookAt(0, 0, 0);
 
-            // CARD
             const card = new THREE.Mesh(
                 new THREE.PlaneGeometry(cardWidth, cardHeight),
                 new THREE.MeshBasicMaterial({
@@ -429,7 +482,6 @@ class PortfolioApp {
                 })
             );
 
-            // Inner glow (slightly behind along local -Z)
             const glow = new THREE.Mesh(
                 new THREE.PlaneGeometry(cardWidth + 0.6, cardHeight + 0.6),
                 new THREE.MeshBasicMaterial({
@@ -442,7 +494,6 @@ class PortfolioApp {
             );
             glow.position.z = -0.02;
 
-            // Outer glow further back
             const outerGlow = new THREE.Mesh(
                 new THREE.PlaneGeometry(cardWidth + 1.3, cardHeight + 1.3),
                 new THREE.MeshBasicMaterial({
@@ -472,7 +523,16 @@ class PortfolioApp {
             });
         }
 
-        this.camera.position.set(0, -3, 18); // unchanged
+        // Camera adjustments
+        if (this.isMobile) {
+            this.camera.position.set(0, -2, 20); // farther back to fit more cards
+            this.camera.fov = 80;
+            this.camera.updateProjectionMatrix();
+        } else {
+            this.camera.position.set(0, -3, 18);
+            this.camera.fov = 75;
+            this.camera.updateProjectionMatrix();
+        }
         this.camera.lookAt(0, 0, 0);
     }
     
@@ -564,15 +624,29 @@ class PortfolioApp {
         
         if (exploreBtn) {
             exploreBtn.addEventListener('click', () => {
-                this.currentPageIndex = 1; // Projects
-                this.showPage('projects');
+                if (this.isMobile) {
+                    document.getElementById('projects')?.scrollIntoView({behavior:'smooth'});
+                    this.updateNavigation('projects');
+                    this.currentPage = 'projects';
+                    this.currentPageIndex = this.pages.indexOf('projects');
+                } else {
+                    this.currentPageIndex = 1;
+                    this.showPage('projects');
+                }
             });
         }
         
         if (contactBtn) {
             contactBtn.addEventListener('click', () => {
-                this.currentPageIndex = 3; // Contact
-                this.showPage('contact');
+                if (this.isMobile) {
+                    document.getElementById('contact')?.scrollIntoView({behavior:'smooth'});
+                    this.updateNavigation('contact');
+                    this.currentPage = 'contact';
+                    this.currentPageIndex = this.pages.indexOf('contact');
+                } else {
+                    this.currentPageIndex = 3;
+                    this.showPage('contact');
+                }
             });
         }
     }
