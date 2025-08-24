@@ -295,8 +295,8 @@ class PortfolioApp {
                 e.preventDefault();
                 // Create a temporary link to trigger download simulation
                 const link = document.createElement('a');
-                link.href = 'data:text/plain;charset=utf-8,Resume%20of%20Abhinav%20-%20Engineering%20Student%20%26%20Developer';
-                link.download = 'Abhinav_Resume.txt';
+                link.href = 'files/resume.pdf';
+                link.download = 'Abhinav_Resume.pdf';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -671,22 +671,35 @@ class PortfolioApp {
     }
     
     // Form Handler
-    setupFormHandler() {
-        const form = document.getElementById('contactForm');
-        if (!form) return;
-        
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('name')?.value || '';
-            const email = document.getElementById('email')?.value || '';
-            const message = document.getElementById('message')?.value || '';
-            
-            // Simulate form submission
-            alert(`Thank you ${name}! Your message has been sent. I'll get back to you at ${email}.`);
-            form.reset();
-        });
+  setupFormHandler() {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        alert("Thanks! Your message has been sent.");
+        form.reset();
+      } else {
+        alert("Oops! Something went wrong.");
+      }
+    } catch (err) {
+      alert("Network error. Please try again later.");
     }
+  });
+}
+  
+
 }
 
 // Initialize the application when DOM is loaded
