@@ -637,75 +637,125 @@ select.form-control {
   }
 }
 
-/* Utility classes */
-.flex {
-  display: flex;
-}
-.flex-col {
-  flex-direction: column;
-}
-.items-center {
-  align-items: center;
-}
-.justify-center {
-  justify-content: center;
-}
-.justify-between {
-  justify-content: space-between;
-}
-.gap-4 {
-  gap: var(--space-4);
-}
-.gap-8 {
-  gap: var(--space-8);
-}
-.gap-16 {
-  gap: var(--space-16);
+/* --- Mobile / Small Device Responsive Fixes --- */
+@media (max-width: 900px) {
+  /* Allow scrolling (was forcing 100vh + overflow hidden causing "crash") */
+  body {
+    overflow-y: auto;
+    height: auto;
+  }
+
+  .main-container {
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Let sections stack naturally instead of absolute layering */
+  .page-section {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+    padding-top: 100px;
+  }
+
+  /* Home layout stacks */
+  .home-content {
+    flex-direction: column;
+    gap: 2.5rem;
+    padding: 0 1.25rem 4rem;
+  }
+
+  .character-container {
+    height: 260px;
+    order: 1;
+  }
+
+  .text-content {
+    order: 2;
+    text-align: center;
+  }
+
+  .main-title {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+
+  .main-description {
+    font-size: 1rem;
+  }
+
+  /* Navbar wrap (simple solution) */
+  .nav-container {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0 1rem;
+  }
+
+  .logo-text {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .nav-menu {
+    flex: 1 1 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+  }
+
+  /* Projects section adjustments */
+  .projects-content {
+    padding-top: 6rem;
+  }
+
+  .carousel-container {
+    height: 42vh;
+  }
+
+  /* Allow project info to sit below carousel without overlap */
+  .project-info {
+    position: static;
+    max-width: 92vw;
+    width: 100%;
+    height: auto;
+    bottom: auto;
+    margin-top: 1rem;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .project-info h3 {
+    font-size: 1.4rem;
+  }
+
+  /* Reduce excessive shadows on mobile GPU */
+  .project-carousel canvas {
+    filter: drop-shadow(0 0 12px rgba(255,165,0,0.32));
+  }
 }
 
-.m-0 {
-  margin: 0;
-}
-.mt-8 {
-  margin-top: var(--space-8);
-}
-.mb-8 {
-  margin-bottom: var(--space-8);
-}
-.mx-8 {
-  margin-left: var(--space-8);
-  margin-right: var(--space-8);
-}
-.my-8 {
-  margin-top: var(--space-8);
-  margin-bottom: var(--space-8);
+@media (max-width: 600px) {
+  .carousel-container {
+    height: 48vh;
+  }
+  .project-info {
+    margin-top: 0.5rem;
+  }
+  .carousel-btn {
+    padding: 0.5rem 1.4rem;
+    font-size: 1.2rem;
+  }
 }
 
-.p-0 {
-  padding: 0;
-}
-.py-8 {
-  padding-top: var(--space-8);
-  padding-bottom: var(--space-8);
-}
-.px-8 {
-  padding-left: var(--space-8);
-  padding-right: var(--space-8);
-}
-.py-16 {
-  padding-top: var(--space-16);
-  padding-bottom: var(--space-16);
-}
-.px-16 {
-  padding-left: var(--space-16);
-  padding-right: var(--space-16);
-}
-
-.block {
-  display: block;
-}
-.hidden {
-  display: none;
+/* Ultra small fallback */
+@media (max-width: 400px) {
+  .main-title {
+    font-size: 1.9rem;
+  }
+  .character-container {
+    height: 220px;
+  }
+  .carousel-container {
+    height: 50vh;
+  }
 }
 
 /* Accessibility */
@@ -945,7 +995,11 @@ body {
     font-size: 3.5rem;
     font-weight: bold;
     color: var(--nether-accent);
-    text-shadow: 0 0 20px var(--nether-glow);
+    /* text-shadow: 0 0 20px var(--nether-glow); */
+    text-shadow:
+        0 4px 24px #000,         /* Strong black shadow for depth */
+        0 0 12px #1a0a00,        /* Subtle deep brown-black glow */
+        0 0 6px var(--nether-glow);
     margin-bottom: 1rem;
     line-height: 1.2;
 }
@@ -956,6 +1010,14 @@ body {
     margin-bottom: 2rem;
     line-height: 1.6;
     opacity: 0.9;
+     /* text-shadow:
+        0 2px 12px #000,     Stronger black shadow for contrast
+        0 0 6px #ff4500,     Orange glow
+        0 0 2px #ffd700;     Gold highlight */
+    text-shadow:
+        0 2px 12px #000,         /* Strong black shadow for contrast */
+        0 0 8px #1a0a00,         /* Deep brown-black glow */
+        0 0 2px #ffd700;         /* Gold highlight */
 }
 
 .cta-buttons {
@@ -969,19 +1031,21 @@ body {
     max-width: 1200px;
     width: 100%;
     padding: 0 2rem;
+    padding-top: 11rem;
 }
 
 .section-title {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     color: var(--nether-accent);
     text-shadow: 0 0 15px var(--nether-glow);
-    margin-bottom: 3rem;
 }
 
 .carousel-container {
     position: relative;
-    height: 400px;
+    height: 35vh;
     margin-bottom: 2rem;
+    z-index: 1;
+
 }
 
 .project-carousel {
@@ -1053,7 +1117,7 @@ body {
 .carousel-controls {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 1rem;
     margin-bottom: 2rem;
 }
 
@@ -1061,12 +1125,14 @@ body {
     background: var(--nether-primary);
     color: var(--nether-accent);
     border: 2px solid var(--nether-accent);
-    padding: 1rem 2rem;
+    margin-top: 1.2rem;
+    padding: 00.5rem 2.5rem;
     font-size: 1.5rem;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 0 15px rgba(255, 165, 0, 0.3);
+    z-index: 3;
 }
 
 .carousel-btn:hover {
@@ -1076,12 +1142,16 @@ body {
 }
 
 .project-info {
-    background: rgba(47, 27, 20, 0.8);
+        background: rgba(47, 27, 20, 0.8);
     padding: 2rem;
     border-radius: 15px;
     border: 1px solid var(--nether-accent);
-    max-width: 600px;
+    max-width: 16vw;
     margin: 0 auto;
+    height: 44vh;
+    position: relative;
+    bottom: 26vh;
+    z-index: 1;
 }
 
 .project-info h3 {
@@ -1176,15 +1246,19 @@ body {
 }
 
 .contact-info h3 {
-    font-size: 1.8rem;
     color: var(--nether-accent);
-    margin-bottom: 1rem;
+    text-shadow:
+        0 2px 6px #000,
+        0 0 10px rgba(255, 140, 0, 0.55),
+        0 0 2px #ffae00;
 }
 
 .contact-info p {
     color: var(--nether-text);
-    margin-bottom: 2rem;
-    line-height: 1.6;
+    text-shadow:
+        0 2px 8px #000,
+        0 0 6px rgba(139, 38, 53, 0.6);
+    opacity: 0.95;
 }
 
 .social-links {
@@ -1192,6 +1266,7 @@ body {
     flex-direction: column;
     gap: 1rem;
     align-items: center;
+    width: 100%;
 }
 
 .social-link {
@@ -1203,10 +1278,12 @@ body {
     border: 1px solid var(--nether-accent);
     transition: all 0.3s ease;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;              /* row instead of column */
     align-items: center;
-    gap: 0.3rem;
-    min-width: 120px;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    min-width: 260px;                 /* wider for horizontal feel */
+    padding: 0.9rem 1.4rem;
 }
 
 .social-link:hover {
@@ -1217,12 +1294,24 @@ body {
 
 .social-icon {
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.25rem;
+    color: var(--nether-accent);
+    text-shadow:
+        0 2px 6px #000,
+        0 0 8px rgba(255,140,0,0.7);
 }
 
 .social-label {
-    font-size: 0.8rem;
-    opacity: 0.8;
+    color: var(--nether-text);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-shadow:
+        0 2px 6px #000,
+        0 0 4px rgba(255,165,0,0.4);
+    opacity: 0.95;
+    line-height: 1.2;
+    text-align: left;
+    white-space: nowrap;
 }
 
 .contact-form {
@@ -1371,4 +1460,125 @@ body {
     .section-title {
         font-size: 2rem;
     }
+}
+
+/* --- Mobile / Small Device Responsive Fixes --- */
+@media (max-width: 900px) {
+  /* Allow scrolling (was forcing 100vh + overflow hidden causing "crash") */
+  body {
+    overflow-y: auto;
+    height: auto;
+  }
+
+  .main-container {
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Let sections stack naturally instead of absolute layering */
+  .page-section {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+    padding-top: 100px;
+  }
+
+  /* Home layout stacks */
+  .home-content {
+    flex-direction: column;
+    gap: 2.5rem;
+    padding: 0 1.25rem 4rem;
+  }
+
+  .character-container {
+    height: 260px;
+    order: 1;
+  }
+
+  .text-content {
+    order: 2;
+    text-align: center;
+  }
+
+  .main-title {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+
+  .main-description {
+    font-size: 1rem;
+  }
+
+  /* Navbar wrap (simple solution) */
+  .nav-container {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0 1rem;
+  }
+
+  .logo-text {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .nav-menu {
+    flex: 1 1 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+  }
+
+  /* Projects section adjustments */
+  .projects-content {
+    padding-top: 6rem;
+  }
+
+  .carousel-container {
+    height: 42vh;
+  }
+
+  /* Allow project info to sit below carousel without overlap */
+  .project-info {
+    position: static;
+    max-width: 92vw;
+    width: 100%;
+    height: auto;
+    bottom: auto;
+    margin-top: 1rem;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .project-info h3 {
+    font-size: 1.4rem;
+  }
+
+  /* Reduce excessive shadows on mobile GPU */
+  .project-carousel canvas {
+    filter: drop-shadow(0 0 12px rgba(255,165,0,0.32));
+  }
+}
+
+@media (max-width: 600px) {
+  .carousel-container {
+    height: 48vh;
+  }
+  .project-info {
+    margin-top: 0.5rem;
+  }
+  .carousel-btn {
+    padding: 0.5rem 1.4rem;
+    font-size: 1.2rem;
+  }
+}
+
+/* Ultra small fallback */
+@media (max-width: 400px) {
+  .main-title {
+    font-size: 1.9rem;
+  }
+  .character-container {
+    height: 220px;
+  }
+  .carousel-container {
+    height: 50vh;
+  }
 }

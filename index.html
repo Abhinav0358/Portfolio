@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abhinav - Portfolio</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="static/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.51/build/spline-viewer.js"></script>
 </head>
@@ -13,7 +13,7 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <span class="logo-text">ABHINAV</span>
+                <span class="logo-text">Portfolio@Abhinav</span>
             </div>
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link" data-page="home">Home</a></li>
@@ -37,7 +37,7 @@
         <section id="home" class="page-section active">
             <div class="home-content">
                 <div class="character-container">
-                    <spline-viewer url="https://prod.spline.design/KE64DtDUIgkVzCt8/scene.splinecode"></spline-viewer>
+                    <spline-viewer url="https://prod.spline.design/KE64DtDUIgkVzCt8/scene.splinecode" background="transparent"></spline-viewer>
                 </div>
                 <div class="text-content">
                     <h1 class="main-title">Hello, I am Abhinav</h1>
@@ -60,10 +60,7 @@
                     <div id="projectCarousel" class="project-carousel">
                         <!-- 3D Carousel will be rendered here -->
                     </div>
-                    <div class="carousel-controls">
-                        <button class="carousel-btn" id="prevBtn">←</button>
-                        <button class="carousel-btn" id="nextBtn">→</button>
-                    </div>
+                    
                 </div>
                 <div class="project-info" id="projectInfo">
                     <h3 id="projectTitle">Doom using RL</h3>
@@ -71,6 +68,10 @@
                     <div class="project-buttons">
                         <a href="#" class="btn btn--primary" id="liveDemo" target="_blank">Live Demo</a>
                         <a href="#" class="btn btn--outline" id="githubLink" target="_blank">GitHub</a>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-btn" id="prevBtn">←</button>
+                        <button class="carousel-btn" id="nextBtn">→</button>
                     </div>
                 </div>
             </div>
@@ -153,7 +154,7 @@
                             </a>
                         </div>
                     </div>
-                    <form class="contact-form" id="contactForm">
+                    <form class="contact-form" id="contactForm" action="https://formspree.io/f/xzzapboe" method="POST">
                         <div class="form-group">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" id="name" name="name" class="form-control" required>
@@ -176,6 +177,6 @@
         </section>
     </main>
 
-    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <script src="static/app.js"></script>
 </body>
 </html>

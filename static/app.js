@@ -393,70 +393,86 @@ class PortfolioApp {
     
     createProjectCards() {
         if (!this.scene) return;
-        
+
+        // Clear old
         this.projectCards = [];
-        const radius = 8;
-        
+        const radius = 11;                 // unchanged
+        const cardWidth = 10;              // unchanged
+        const cardHeight = cardWidth * 2.5;// unchanged
+        this.carouselRadius = radius;
+
+        const palette = [
+            { base: 0x602414, glow: 0xff7a1f, outer: 0xffc24d },
+            { base: 0x4d1e12, glow: 0xff6419, outer: 0xffb339 },
+            { base: 0x552815, glow: 0xff8c26, outer: 0xffd266 },
+            { base: 0x432016, glow: 0xff7522, outer: 0xffbd52 },
+            { base: 0x5e2d18, glow: 0xff6a18, outer: 0xffb247 },
+            { base: 0x472417, glow: 0xff821f, outer: 0xffcc55 }
+        ];
+
         for (let i = 0; i < this.projectData.length; i++) {
             const angle = (i / this.projectData.length) * Math.PI * 2;
-            
-            // Card geometry with enhanced glow
-            const geometry = new THREE.PlaneGeometry(3, 4);
-            
-            // Enhanced material with better glow
-            const material = new THREE.MeshBasicMaterial({
-                color: new THREE.Color().setHSL((i * 60) % 360 / 360, 0.7, 0.6),
-                transparent: true,
-                opacity: 0.8
-            });
-            
-            const card = new THREE.Mesh(geometry, material);
-            card.position.x = Math.cos(angle) * radius;
-            card.position.z = Math.sin(angle) * radius;
-            card.position.y = 0;
-            card.lookAt(0, 0, 0);
-            
-            // Enhanced glow effect for flying cards
-            const glowGeometry = new THREE.PlaneGeometry(3.4, 4.4);
-            const glowMaterial = new THREE.MeshBasicMaterial({
-                color: 0xFFA500,
-                transparent: true,
-                opacity: 0.3
-            });
-            const glow = new THREE.Mesh(glowGeometry, glowMaterial);
-            glow.position.copy(card.position);
-            glow.position.z -= 0.01;
-            glow.lookAt(0, 0, 0);
-            
-            // Add outer glow for extra floating effect
-            const outerGlowGeometry = new THREE.PlaneGeometry(3.8, 4.8);
-            const outerGlowMaterial = new THREE.MeshBasicMaterial({
-                color: 0xFF4500,
-                transparent: true,
-                opacity: 0.15
-            });
-            const outerGlow = new THREE.Mesh(outerGlowGeometry, outerGlowMaterial);
-            outerGlow.position.copy(card.position);
-            outerGlow.position.z -= 0.02;
-            outerGlow.lookAt(0, 0, 0);
-            
-            this.scene.add(outerGlow);
-            this.scene.add(glow);
-            this.scene.add(card);
-            
-            // Store cards with floating animation properties
-            this.projectCards.push({ 
-                card, 
-                glow, 
+            const colors = palette[i % palette.length];
+
+            // Group holds card + glows so we can float Y without breaking circular layout
+            const group = new THREE.Group();
+            group.position.set(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
+            group.lookAt(0, 0, 0);
+
+            // CARD
+            const card = new THREE.Mesh(
+                new THREE.PlaneGeometry(cardWidth, cardHeight),
+                new THREE.MeshBasicMaterial({
+                    color: colors.base,
+                    transparent: true,
+                    opacity: 0.95
+                })
+            );
+
+            // Inner glow (slightly behind along local -Z)
+            const glow = new THREE.Mesh(
+                new THREE.PlaneGeometry(cardWidth + 0.6, cardHeight + 0.6),
+                new THREE.MeshBasicMaterial({
+                    color: colors.glow,
+                    transparent: true,
+                    opacity: 0.42,
+                    blending: THREE.AdditiveBlending,
+                    depthWrite: false
+                })
+            );
+            glow.position.z = -0.02;
+
+            // Outer glow further back
+            const outerGlow = new THREE.Mesh(
+                new THREE.PlaneGeometry(cardWidth + 1.3, cardHeight + 1.3),
+                new THREE.MeshBasicMaterial({
+                    color: colors.outer,
+                    transparent: true,
+                    opacity: 0.18,
+                    blending: THREE.AdditiveBlending,
+                    depthWrite: false
+                })
+            );
+            outerGlow.position.z = -0.04;
+
+            group.add(outerGlow);
+            group.add(glow);
+            group.add(card);
+            this.scene.add(group);
+
+            this.projectCards.push({
+                group,
+                card,
+                glow,
                 outerGlow,
                 index: i,
-                floatOffset: i * 0.8, // Stagger timing
-                floatSpeed: 0.8 + (i * 0.1), // Vary speed
-                rotationOffset: (Math.random() - 0.5) * 0.02 // Small random rotation
+                floatOffset: i * 0.8,
+                floatSpeed: 0.8 + (i * 0.1),
+                rotationOffset: (Math.random() - 0.5) * 0.02
             });
         }
-        
-        this.camera.position.set(0, 2, 12);
+
+        this.camera.position.set(0, -3, 18); // unchanged
         this.camera.lookAt(0, 0, 0);
     }
     
@@ -517,42 +533,26 @@ class PortfolioApp {
     // Enhanced Carousel Animation with Flying Cards Effect
     animateCarousel() {
         if (!this.renderer || !this.scene || !this.camera) return;
-        
-        // Enhanced floating animation for flying cards
+
         const time = Date.now() * 0.001;
-        
+
         if (this.projectCards) {
-            this.projectCards.forEach((cardObj, index) => {
-                const offsetTime = time * cardObj.floatSpeed + cardObj.floatOffset;
-                
-                // Floating effect - different patterns for each card
-                const floatY = Math.sin(offsetTime) * (0.15 + index * 0.02);
-                const floatX = Math.cos(offsetTime * 0.7) * 0.05;
-                const rotation = Math.sin(offsetTime * 0.5) * cardObj.rotationOffset;
-                
-                // Apply floating animations
-                cardObj.card.position.y = floatY;
-                cardObj.glow.position.y = floatY;
-                cardObj.outerGlow.position.y = floatY;
-                
-                // Subtle horizontal drift
-                const baseX = Math.cos((cardObj.index / this.projectData.length) * Math.PI * 2) * 8;
-                cardObj.card.position.x = baseX + floatX;
-                cardObj.glow.position.x = baseX + floatX;
-                cardObj.outerGlow.position.x = baseX + floatX;
-                
-                // Subtle rotation for floating effect
-                cardObj.card.rotation.z = rotation;
-                cardObj.glow.rotation.z = rotation;
-                cardObj.outerGlow.rotation.z = rotation;
-                
-                // Pulsing glow effect
-                const glowPulse = 0.3 + Math.sin(offsetTime * 2) * 0.1;
-                cardObj.glow.material.opacity = glowPulse;
-                cardObj.outerGlow.material.opacity = glowPulse * 0.5;
+            this.projectCards.forEach(obj => {
+                const t = time * obj.floatSpeed + obj.floatOffset;
+
+                // Only adjust vertical float on the GROUP (keeps ring intact)
+                obj.group.position.y = Math.sin(t) * 0.35;
+
+                // Subtle breathing roll just on the card (not the glows so they stay aligned)
+                obj.card.rotation.z = Math.sin(t * 0.6) * obj.rotationOffset * 3;
+
+                // Pulse inner/outer glows
+                const pulse = 0.35 + Math.sin(t * 2) * 0.15;
+                obj.glow.material.opacity = 0.25 + pulse * 0.4;
+                obj.outerGlow.material.opacity = 0.12 + pulse * 0.1;
             });
         }
-        
+
         this.renderer.render(this.scene, this.camera);
         requestAnimationFrame(() => this.animateCarousel());
     }
