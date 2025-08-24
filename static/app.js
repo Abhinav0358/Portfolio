@@ -16,54 +16,54 @@ class PortfolioApp {
                 title: "Doom using RL",
                 description: "A reinforcement learning project aimed at training an agent to play Doom. Utilizes deep learning techniques for decision making.",
                 image: "https://media.giphy.com/media/3o7ZeMCXAFPvusagQU/giphy.gif",
-                gif: "https://media.giphy.com/media/3o7ZeMCXAFPvusagQU/giphy.gif",
+                gif: "gifs/doom gif.gif",
                 liveDemo: "https://github.com/abhinav",
-                github: "https://github.com/abhinav"
+                github: "https://github.com/Abhinav0358/SOC-Abhinav.git"
             },
             {
                 id: 2,
-                title: "Live chat using websockets",
-                description: "Real-time chat application utilizing WebSocket for instant messaging.",
-                image: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=400&h=300&fit=crop",
-                gif: "static/gifs/chat.gif",
-                liveDemo: "https://github.com/abhinav",
-                github: "https://github.com/abhinav"
-            },
-            {
-                id: 3,
                 title: "Spherobot",
                 description: "An omnidirectional spherical robot with advanced navigation and manipulation capabilities.",
                 image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop",
-                gif: "static/gifs/spherobot.gif",
+                gif: "gifs/spherobot gif.gif",
                 liveDemo: "https://github.com/abhinav",
-                github: "https://github.com/abhinav"
+                github: "https://github.com/Abhinav0358/spherobot-joystick.git"
+            },
+            {
+                id: 3,
+                title: "Ms101 drone project",
+                description: "Remote-Controlled Drone – Quadcopter built with Arduino + ESP32 for wireless control.",
+                image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=300&fit=crop",
+                gif: "gifs/drone.jpg",
+                liveDemo: "https://github.com/abhinav",
+                github: "Github_not_available_for_this_project"
             },
             {
                 id: 4,
-                title: "Three js",
-                description: "interactive pages build using Three.js",
-                image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=300&fit=crop",
-                gif: "static/gifs/threejs.gif",
+                title: "Live chat using websockets",
+                description: "Real-time chat application utilizing WebSocket for instant messaging.",
+                image: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=400&h=300&fit=crop",
+                gif: "gifs/live chat gif.gif",
                 liveDemo: "https://github.com/abhinav",
-                github: "https://github.com/abhinav"
+                github: "https://github.com/Abhinav0358/Chat-server.git"
             },
             {
                 id: 5,
-                title: "Proj 5 ",
-                description: "",
-                image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
-                gif: "", // no gif yet
-                liveDemo: "https://github.com/abhinav",
-                github: "https://github.com/abhinav"
-            },
-            {
-                id: 6,
                 title: "Portfolio",
                 description: "This immersive Nether-themed portfolio website with 3D interactions and particle effects.",
                 image: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&h=300&fit=crop",
-                gif: "static/gifs/portfolio.gif",
+                gif: "gifs/portfolio gif.gif",
                 liveDemo: "https://github.com/abhinav",
-                github: "https://github.com/abhinav"
+                github: "https://github.com/Abhinav0358/Portfolio.git"
+            },
+            {
+                id: 6,
+                title: "Snake game",
+                description: "A classic Snake game, I should really not be putting this",
+                image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
+                gif: "gifs/snake game gif.gif",
+                liveDemo: "https://github.com/abhinav",
+                github: "https://github.com/Abhinav0358/snakegame.git"
             }
         ];
         
